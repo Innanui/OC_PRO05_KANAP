@@ -40,7 +40,7 @@ const createOneProductCard = (kanap) => {
   let h3 = document.createElement("h3")
   let p = document.createElement("p")
 
-  anchor.setAttribute("src", `./product.html?id=${kanapId}`)
+  anchor.setAttribute("href", `./product.html?id=${kanapId}`)
   img.setAttribute("src", kanapImageURL)
   img.setAttribute("alt", kanapAltTxt)
   h3.classList.add("productName")
