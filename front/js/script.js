@@ -1,22 +1,7 @@
-/* recupere les donnees concernant les canapés et les utilise pour remplir la page d'accueil */
-
 const sectionItems = document.getElementById("items")
 
 /**
- * Récuperer le catalogue de canapés en utilisant l'API fetch
- * @return {Promise}
- * */
-const retrieveFullCatalogue = () =>
-  fetch("http://localhost:3000/api/products")
-    .then((data) => data.json())
-    .catch((err) =>
-      console.log(
-        "oh no, unable to load full catalogue in getFullCatalogue" + err
-      )
-    )
-
-/**
- * Créer une carte produit à partir d'un objet kanap et l'ajoute a la section items
+ * Creates product card from a product object and append it to "item" section in HTML
  * @param {Object} kanap
  * @param {string} kanap.colors
  * @param {string} kanap._id
@@ -56,7 +41,7 @@ const createOneProductCard = (kanap) => {
 }
 
 /**
- * Crée les cartes produits a partir d'un tableau de produits
+ * Creates product cards from a product array
  * @param {Array.<Object>} jsonListProducts
  * @returns { HTML Element }
  */
