@@ -40,7 +40,7 @@ const newProductCard = async (id, qty, color) => {
   divContent.appendChild(divTitle)
 
   var h2 = document.createElement("h2")
-  h2.textContent = product.name
+  h2.textContent = `${product.name} ${color}`
 
   divTitle.appendChild(h2)
 
@@ -85,19 +85,40 @@ const newProductCard = async (id, qty, color) => {
 
   divDeleteItem.appendChild(paraDeleteItem)
 
-  input.addEventListener("change", updateQtyInCart(id, input.value, color))
-  paraDeleteItem.addEventListener("click", removeFromCart(id, color))
+  input.addEventListener("change", async (e) => {
+    console.log("input event listener fired") // FOR DEVELOPEMENT ONLY
+    updateQtyInCart(id, input.value, color)
+    updateCartTotal(await calculateCartTotal())
+  })
+  paraDeleteItem.addEventListener("click", async (e) => {
+    console.log("delete Item event listener fired") //FOR DEVELOPEMENT ONLY
+    removeFromCart(id, color)
+    article.remove()
+    updateCartTotal(await calculateCartTotal())
+  })
+}
+
+/**
+ * Modifies total and nr of article informations in HTML
+ * @param {number} total
+ */
+const updateCartTotal = (total) => {
+  var totalQuantity = document.getElementById("totalQuantity")
+  var totalPrice = document.getElementById("totalPrice")
+  totalPrice.textContent = `${total},00`
+  totalQuantity.textContent = calculateArticlesInCart()
 }
 
 /**
  * Fills cart checkup table using infos in localStorage
  * @returns {htmlElement}
  */
-const fillCartTable = () => {
-  var cart = getCart()
-  cart.forEach((element) => {
+const fillCartTable = async () => {
+  var sortedCart = sortCart(getCart())
+  sortedCart.forEach((element) => {
     newProductCard(element.id, element.qty, element.color)
   })
+  updateCartTotal(await calculateCartTotal())
 }
 
 // supprimer la carte de l'article si la quantite est a 0 ou si click sur supprimer

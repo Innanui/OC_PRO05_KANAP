@@ -1,7 +1,7 @@
 /* Management of cart:
- retrive of cart, 
- add an article, 
- delete an article, 
+ retrive cart from localStorage, 
+ add article to cart, 
+ delete article from cart, 
  update article quantity
 */
 
@@ -31,7 +31,7 @@ const saveCart = (array) => {
 const updateQtyInCart = (prodId, prodQty, prodColor) => {
   var cart = getCart()
   if (prodQty == 0) {
-    deleteFromCart(prodId, prodColor)
+    removeFromCart(prodId, prodColor)
   } else {
     cart.forEach((element, index, array) => {
       if (element.id == prodId && element.color == prodColor) {
@@ -75,11 +75,53 @@ const addToCart = (prodId, prodQty, prodColor) => {
  * @param {string} prodColor
  */
 const removeFromCart = (prodId, prodColor) => {
+  console.log(`remove from cart:${prodId}${prodColor}`)
   var cart = getCart()
   cart = cart.filter(
     (element) => element.id != prodId && element.color != prodColor
   )
   saveCart(cart)
+}
+
+/** Sort cart to gather same articles (different colors) together
+ * @param {object[]} cart
+ * @returns {object[]} cart sorted
+ */
+
+const sortCart = (cart) => {
+  return cart.sort((a, b) => {
+    if (a.id < b.id) return 1
+    else if (a.id > b.id) return -1
+    else return 0
+  })
+}
+
+/**
+ * Calculates cart total
+ * @returns {number} cartTotal
+ */
+const calculateCartTotal = async () => {
+  var cart = getCart()
+  var cartTotal = 0
+  for (article of cart) {
+    var APIProduct = await retrieveProductById(article.id)
+    cartTotal += article.qty * APIProduct.price
+  }
+  return cartTotal
+}
+
+/**
+ * Calculates number of articles in cart
+ * @returns {number}
+ */
+
+const calculateArticlesInCart = () => {
+  var cart = getCart()
+  var count = 0
+  for (article of cart) {
+    count += parseInt(article.qty)
+  }
+  return count
 }
 
 /******* ONLY FOR TESTING PURPOSE ******/
