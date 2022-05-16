@@ -121,6 +121,61 @@ const fillCartTable = async () => {
   updateCartTotal(await calculateCartTotal())
 }
 
-// supprimer la carte de l'article si la quantite est a 0 ou si click sur supprimer
-// probleme lorsque l'on modifie la quantite ou supprime, le cart se vide ...
 fillCartTable()
+
+/*--------------------------------------------------------*/
+/*-------------------- FORM MANAGEMENT -------------------*/
+/*--------------------------------------------------------*/
+
+let form = document.querySelector("form")
+
+/**
+ * Prevents default behavior of submit event and creates a formData object
+ * @param {event} event
+ */
+const manageSubmit = (event) => {
+  event.preventDefault()
+  new FormData(form)
+}
+
+/**
+ * checks user input validity
+ * @returns boolean
+ */
+const isDataValid = () => {
+  return (
+    allLetter(form.firstName) &&
+    lengthRange(form.firstName) &&
+    allLetter(form.lastName) &&
+    lengthRange(form.lastName) &&
+    allLetterOrNumber(form.address) &&
+    lengthRange(form.address) &&
+    allLetter(form.city) &&
+    lengthRange(form.city) &&
+    validateEmail(form.email)
+  )
+}
+
+/**
+ * Creates contact object and product array if input is valid
+ * calls post request
+ * redirects to confirmation page
+ * @param {event} e
+ */
+const manageFormData = async (e) => {
+  var data = e.formData
+  if (isDataValid()) {
+    var contactObj = {}
+    var productsArr = []
+    data.forEach((value, key) => (contactObj[key] = value))
+    getCart().forEach((element, index) => (productsArr[index] = element.id))
+    let orderId = await postUserInput({
+      contact: contactObj,
+      products: productsArr,
+    })
+    window.location = `./confirmation.html?id=${orderId}`
+  }
+}
+
+form.addEventListener("submit", manageSubmit)
+form.addEventListener("formdata", manageFormData)
