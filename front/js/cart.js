@@ -1,7 +1,7 @@
 const sectionCartItems = document.getElementsByClassName("cart__items")[0]
 
 /**
- * Creates and appends one product card in cart checkup HTML page
+ * Creates and appends one product card in cart summary HTML page
  * @param {string} id
  * @param {number} qty
  * @param {string} color
@@ -86,14 +86,14 @@ const newProductCard = async (id, qty, color) => {
   divDeleteItem.appendChild(paraDeleteItem)
 
   input.addEventListener("change", async (e) => {
-    console.log("input event listener fired") // FOR DEVELOPEMENT ONLY
+    //console.log("input event listener fired") // FOR DEVELOPEMENT ONLY
     updateQtyInCart(id, input.value, color)
     updateCartTotal(await calculateCartTotal())
   })
   paraDeleteItem.addEventListener("click", async (e) => {
-    console.log("delete Item event listener fired") //FOR DEVELOPEMENT ONLY
+    //console.log("delete Item event listener fired") //FOR DEVELOPEMENT ONLY
     removeFromCart(id, color)
-    article.remove()
+    article.remove() //delete article in HTML
     updateCartTotal(await calculateCartTotal())
   })
 }

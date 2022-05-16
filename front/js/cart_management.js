@@ -43,7 +43,7 @@ const updateQtyInCart = (prodId, prodQty, prodColor) => {
 }
 
 /**
- * Add product to cart on Local Storage (checks also if product is already in cart to ensure one index per item in cart)
+ * Add product to cart in Local Storage (checks also if product is already in cart to ensure one index per item in cart)
  * @param {string} prodId
  * @param {number} prodQty
  * @param {string} prodColor
@@ -75,7 +75,7 @@ const addToCart = (prodId, prodQty, prodColor) => {
  * @param {string} prodColor
  */
 const removeFromCart = (prodId, prodColor) => {
-  console.log(`remove from cart:${prodId}${prodColor}`)
+  //console.log(`remove from cart:${prodId}${prodColor}`)
   var cart = getCart()
   cart = cart.filter(
     (element) => element.id != prodId && element.color != prodColor

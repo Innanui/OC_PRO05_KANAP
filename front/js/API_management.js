@@ -12,7 +12,7 @@ const retrieveFullCatalogue = () =>
     )
 
 /**
- * retrieves product Object from its ID using the API
+ * retrieves product Object from product ID using the API
  * @param {string} productId
  * @returns {Promise}
  */
