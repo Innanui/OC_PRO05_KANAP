@@ -52,8 +52,12 @@ const createProductCards = (jsonListProducts) => {
 }
 
 const main = async () => {
-  const fullCatalogue = await retrieveFullCatalogue()
-  createProductCards(fullCatalogue)
+  try {
+    const fullCatalogue = await retrieveFullCatalogue()
+    createProductCards(fullCatalogue)
+  } catch (e) {
+    console.log(e)
+  }
 }
 
 main()

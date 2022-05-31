@@ -53,9 +53,13 @@ const updateCart = () => {
 }
 
 async function main() {
-  let article = await retrieveProductById(productId)
-  fillProductInformation(article)
-  addToCartBtn.addEventListener("click", updateCart)
+  try {
+    let article = await retrieveProductById(productId)
+    fillProductInformation(article)
+    addToCartBtn.addEventListener("click", updateCart)
+  } catch (e) {
+    console.log(e)
+  }
 }
 
 main()

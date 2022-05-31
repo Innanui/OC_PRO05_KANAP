@@ -4,7 +4,7 @@
  * @returns boolean
  */
 const validateEmail = (mail) => {
-  var mailRegex = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/
+  let mailRegex = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/
   if (mail.value.match(mailRegex)) {
     mail.nextElementSibling.textContent = ""
     return true
@@ -19,7 +19,7 @@ const validateEmail = (mail) => {
  * @returns boolean
  */
 const allLetter = (inputtxt) => {
-  var letters = /^[a-zA-Z_\-\s\é\è\ê\ë\ï\î\û\ü\à\ô\ö]+$/ // alpha (min or maj) + spaces, -, and accents
+  let letters = /^[a-zA-Z_\-\s\é\è\ê\ë\ï\î\û\ü\à\ô\ö]+$/ // alpha (min or maj) + spaces, -, and accents
   if (inputtxt.value.match(letters)) {
     inputtxt.nextElementSibling.textContent = ""
     return true
@@ -34,7 +34,7 @@ const allLetter = (inputtxt) => {
  * @returns boolean
  */
 const allLetterOrNumber = (inputtxt) => {
-  var letters = /^[0-9a-zA-Z_\-\s\é\è\ê\ë\ï\î\û\ü\à\ô\ö]+$/ // alpha numeric (min or maj) + spaces, -, and accents
+  let letters = /^[0-9a-zA-Z_\-\s\é\è\ê\ë\ï\î\û\ü\à\ô\ö]+$/ // alpha numeric (min or maj) + spaces, -, and accents
   if (inputtxt.value.match(letters)) {
     inputtxt.nextElementSibling.textContent = ""
     return true
@@ -52,7 +52,7 @@ const allLetterOrNumber = (inputtxt) => {
  * @returns boolean
  */
 const lengthRange = (inputtxt) => {
-  var userInput = inputtxt.value
+  let userInput = inputtxt.value
   if (userInput.length >= 2 && userInput.length <= 30) {
     return true
   }

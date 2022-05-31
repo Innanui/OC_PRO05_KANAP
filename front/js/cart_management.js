@@ -18,7 +18,7 @@ const getCart = () => {
  * @param {object[]} array
  */
 const saveCart = (array) => {
-  var linearCart = JSON.stringify(array)
+  let linearCart = JSON.stringify(array)
   localStorage.setItem("cart", linearCart)
 }
 
@@ -29,7 +29,7 @@ const saveCart = (array) => {
  * @param {string} prodColor
  */
 const updateQtyInCart = (prodId, prodQty, prodColor) => {
-  var cart = getCart()
+  let cart = getCart()
   if (prodQty == 0) {
     removeFromCart(prodId, prodColor)
   } else {
@@ -49,8 +49,8 @@ const updateQtyInCart = (prodId, prodQty, prodColor) => {
  * @param {string} prodColor
  */
 const addToCart = (prodId, prodQty, prodColor) => {
-  var cart = getCart()
-  var newItem = true // used to check weather the item is already in the cart
+  let cart = getCart()
+  let newItem = true // used to check weather the item is already in the cart
   cart.forEach((element, index, array) => {
     if (element.id == prodId && element.color == prodColor) {
       //array[index].qty = parseInt(array[index].qty) + prodQty
@@ -58,7 +58,7 @@ const addToCart = (prodId, prodQty, prodColor) => {
       newItem = false
     }
   })
-  var productToAdd = {
+  let productToAdd = {
     id: prodId,
     qty: prodQty,
     color: prodColor,
@@ -76,7 +76,7 @@ const addToCart = (prodId, prodQty, prodColor) => {
  */
 const removeFromCart = (prodId, prodColor) => {
   //console.log(`remove from cart:${prodId}${prodColor}`)
-  var cart = getCart()
+  let cart = getCart()
   cart = cart.filter(
     (element) => element.id != prodId && element.color != prodColor
   )
@@ -101,13 +101,17 @@ const sortCart = (cart) => {
  * @returns {number} cartTotal
  */
 const calculateCartTotal = async () => {
-  var cart = getCart()
-  var cartTotal = 0
+  let cart = getCart()
+  let cartTotal = 0
   for (article of cart) {
-    var APIProduct = await retrieveProductById(article.id)
-    cartTotal += article.qty * APIProduct.price
+    try {
+      let APIProduct = await retrieveProductById(article.id)
+      cartTotal += article.qty * APIProduct.price
+    } catch (e) {
+      console.log(e)
+    }
+    return cartTotal
   }
-  return cartTotal
 }
 
 /**
@@ -116,8 +120,8 @@ const calculateCartTotal = async () => {
  */
 
 const calculateArticlesInCart = () => {
-  var cart = getCart()
-  var count = 0
+  let cart = getCart()
+  let count = 0
   for (article of cart) {
     count += parseInt(article.qty)
   }
@@ -133,7 +137,7 @@ const cleanCart = () => {
 
 //PRINT CART IN CONSOLE
 const printCart = () => {
-  var cart = getCart()
+  let cart = getCart()
   console.log("nr of items in the cart ;" + cart.length)
   cart.forEach(function (item, index) {
     console.log(`[${index}]: ${item.id} ${item.qty} ${item.color}`)
